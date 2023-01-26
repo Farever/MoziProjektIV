@@ -5,22 +5,34 @@ import sqlite3
 def delete(orderID):
     conn = sqlite3.connect("moziProjekt.db")
     c = conn.cursor()
-    c.execute("DELETE FROM reservations WHERE ID= "+ orderID)
+    c.execute("DELETE FROM reservations WHERE ID= "+ str(orderID))
     conn.commit()
     conn.close()
 
-#Insert
-def insert(orderID, lastName, firstName, hall, chair):
+#Foglalás hozzáadása
+def insert(lastName, firstName, hall, chair):
     conn = sqlite3.connect("moziProjekt.db")
     c = conn.cursor()
-    c.execute("INSERT INTO reservations VALUES (:ID, :last_Name, :first_Name, :hall, :chair)",
+    c.execute("INSERT or REPLACE INTO reservations VALUES (NULL, :last_Name, :first_Name, :hall, :chair)",
         {
-            'ID':orderID,
-            'last_Name':lastName,
-            'first_Name':firstName,
-            'hall': hall,
-            'chair': chair,
+            'last_Name':str(lastName),
+            'first_Name': str(firstName),
+            'hall': int(hall),
+            'chair': int(chair),
         }
     )
     conn.commit()
     conn.close()
+
+#Update szerintem nem kell ehhez a projekthez
+
+#Foglalás lekérdezés
+def select(orderID):
+    conn = sqlite3.connect("moziProjekt.db")
+    c = conn.cursor()   
+    c.execute("SELECT * FROM reservations WHERE ID=" + str(orderID))
+    records = c.fetchall()
+    print(records[0][1]) #A lekérdezetett foglalás 2.recordja (last_Name)
+
+insert("Példa", "János" , 1 , 15)
+select(1)
