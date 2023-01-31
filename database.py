@@ -46,4 +46,4 @@ def selectMovie(id):
     records = c.fetchall()
     actual = movie(records[0][0], records[0][1], records[0][2], records[0][3], records[0][4], records[0][5])
     moveiesList.append(actual)
-    print(moveiesList[0].title)
+    return actual
