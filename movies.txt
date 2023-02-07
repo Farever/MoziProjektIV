@@ -1,0 +1,4 @@
+1;35;Avatar2;2022;Akció;180
+2;20;Puss in Boots;2022;Mese;130
+3;40;Sharknado;2008;Akció;120
+4;15;Transformers;2005;Akció;200
