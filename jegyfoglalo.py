@@ -3,6 +3,7 @@ import ttkbootstrap as ttk
 import math
 
 root = Tk()
+style = ttk.Style("darkly")
 
 chairs = []
 sor = []
@@ -18,7 +19,7 @@ windowWidth = math.floor((ferohely / 5) * 100)
 
 root.geometry(f'{windowWidth}x500')
 
-lbl_foglalasKiiras = ttk.Label(root, bootstyle="primary", text ="Foglalások: ")
+lbl_foglalasKiiras = ttk.Label(root, bootstyle="warning", text ="Foglalások: ")
 #lbl_foglalasFrame = Labelframe(root, bootstyle="success", text="Foglalások aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", height=50)
 lbl_foglalasKiiras.grid(column= 0, row = 15, columnspan= 5)
 #lbl_foglalasFrame.grid(column= 0, row = 15, columnspan= 5)
@@ -35,7 +36,7 @@ with open("chairs.txt", encoding="utf8") as file:
 for i in range(len(foglaltak)):
     chairs[foglaltak[i]] = 1
 
-def foglalas(szekszam, button):
+def foglalasLista(szekszam, button):
     
     if(chairs[szekszam] == 0):
         print("foglal" + str(szekszam))
@@ -64,6 +65,31 @@ def foglalas(szekszam, button):
                 
         button= "success"
 
+def foglalasAdatbazis():
+    print("Hmm")
+
+def nevAblak():
+    top = ttk.Toplevel()
+    
+    top.geometry("400x200")
+
+    lbl_visszaigazolas = ttk.Label(top, text= "Foglalás", font=("Arial", 25))
+    lbl_Vezeteknev = ttk.Label(top, text ="Kérem írja be a Vezeték nevét! ", font=("Arial", 10), bootstyle ="info")
+    lbl_Keresztnev = ttk.Label(top, text ="Kérem írja be a Kereszt nevét! ", font=("Arial", 10), bootstyle ="info")
+    ent_Vezeteknev = ttk.Entry(top, bootstyle="primary", width= 50)
+    ent_Keresztnev = ttk.Entry(top, bootstyle="primary", width= 50)
+    btn_foglalas = ttk.Button(top, bootstyle = "info", text=" Foglalás", command=foglalasAdatbazis)
+
+
+    lbl_visszaigazolas.grid(row= 1, column= 1, columnspan= 4,pady= 2)
+    lbl_Vezeteknev.grid(row=2, column=1, pady= 2)
+    ent_Vezeteknev.grid(row= 3, column= 1, columnspan= 4, pady= 2)
+    
+    lbl_Keresztnev.grid(row=4, column=1, pady= 2)
+    ent_Keresztnev.grid(row= 5, column=1 , pady= 2, columnspan= 4)
+    btn_foglalas.grid(row= 6, column= 4, pady= 2)
+
+
 
 
 def buttonStructure():
@@ -77,7 +103,7 @@ def buttonStructure():
         
         #print(chairs[i])
         if(chairs[i] == 0):    
-            btn = ttk.Button(root, text = i, bootstyle="success", command= lambda seat_number = i:foglalas(seat_number, btn.config("bootstyle")), state="on", width = 10)
+            btn = ttk.Button(root, text = i, bootstyle="success", command= lambda seat_number = i:foglalasLista(seat_number, btn.config("bootstyle")), state="on", width = 10)
             btn.grid(row = sor, column= oszlop,padx= 2, pady= 2)
             oszlop += 1
                 
@@ -85,6 +111,9 @@ def buttonStructure():
             btn = ttk.Button(root, text = i, bootstyle="danger",  width = 10,)
             btn.grid(row = sor, column= oszlop,  padx= 2, pady= 2)
             oszlop += 1
+    
+    btn_foglalo = ttk.Button(root, bootstyle="primary", text = "Foglalás", width = 10, command= nevAblak)
+    btn_foglalo.grid(row= sor + 1, column= oszlop + 1)
         
         
 
