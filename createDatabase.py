@@ -31,7 +31,7 @@ c.execute(""" CREATE TABLE reservations (
 
 with open("movies.txt", "r",encoding = 'utf-8') as f:
     for line in f:
-        Id, Chairs, Title, Date, Genre, PlayTime = line.strip().split(";")
+        Id, Chairs, Title, Date, Genre, PlayTime = line.strip().split("&")
         c.execute("INSERT INTO halls VALUES (:ID, :chairs, :movie_Title, :movie_Date, :movie_Genre, :movie_PlayTime)",
         {
             'ID': int(Id),
