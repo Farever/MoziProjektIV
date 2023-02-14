@@ -1,7 +1,7 @@
 from tkinter import *
 import sqlite3
-from reservationClass import reservation
-from movieClass import movie
+from classes import reservation
+from classes import movie
 
 resList = []
 moveiesList = []
@@ -36,7 +36,7 @@ def selectReservation(orderID):
     c.execute("SELECT * FROM reservations WHERE ID=" + str(orderID))
     records = c.fetchall()
     actual = reservation(records[0][0], records[0][1], records[0][2], records[0][3], records[0][4])
-    resList.append(actual)
+    return actual
 
 #Filmadatok lekérdezése
 def selectMovie(id):
@@ -47,3 +47,11 @@ def selectMovie(id):
     actual = movie(records[0][0], records[0][1], records[0][2], records[0][3], records[0][4], records[0][5])
     moveiesList.append(actual)
     return actual
+
+#Leszámolás
+def count(hallId):
+    conn = sqlite3.connect("moziProjekt.db")
+    c = conn.cursor()   
+    c.execute("SELECT COUNT(*) FROM reservations WHERE hall =" + str(hallId))
+    numberOfRows = c.fetchone()[0]
+    return numberOfRows
