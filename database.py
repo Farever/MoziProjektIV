@@ -51,6 +51,6 @@ def selectMovie(id):
 def count(hallId):
     conn = sqlite3.connect("moziProjekt.db")
     c = conn.cursor()   
-    c.execute("SELECT COUNT(*) FROM reservations WHERE ID =" + str(hallId))
+    c.execute("SELECT COUNT(*) FROM reservations WHERE hall =" + str(hallId))
     numberOfRows = c.fetchone()[0]
     return numberOfRows
