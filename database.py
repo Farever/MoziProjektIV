@@ -46,3 +46,11 @@ def selectMovie(id):
     records = c.fetchall()
     actual = movie(records[0][0], records[0][1], records[0][2], records[0][3], records[0][4], records[0][5])
     return actual
+
+#Leszámolás
+def count(hallId):
+    conn = sqlite3.connect("moziProjekt.db")
+    c = conn.cursor()   
+    c.execute("SELECT COUNT(*) FROM reservations WHERE ID =" + str(hallId))
+    numberOfRows = c.fetchone()[0]
+    return numberOfRows
