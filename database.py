@@ -15,11 +15,12 @@ def delete(orderID):
     conn.close()
 
 #Foglalás hozzáadása
-def insert(lastName, firstName, hall, chair):
+def insert(order_ID, lastName, firstName, hall, chair):
     conn = sqlite3.connect("moziProjekt.db")
     c = conn.cursor()
-    c.execute("INSERT or REPLACE INTO reservations VALUES (NULL, :last_Name, :first_Name, :hall, :chair)",
+    c.execute("INSERT or REPLACE INTO reservations VALUES (NULL,:orderID, :last_Name, :first_Name, :hall, :chair)",
         {
+            'orderID': int(order_ID),
             'last_Name':str(lastName),
             'first_Name': str(firstName),
             'hall': int(hall),
@@ -33,10 +34,11 @@ def insert(lastName, firstName, hall, chair):
 def selectReservation(orderID):
     conn = sqlite3.connect("moziProjekt.db")
     c = conn.cursor()   
-    c.execute("SELECT * FROM reservations WHERE ID=" + str(orderID))
+    c.execute("SELECT * FROM reservations WHERE orderID=" + str(orderID))
     records = c.fetchall()
-    actual = reservation(records[0][0], records[0][1], records[0][2], records[0][3], records[0][4])
-    return actual
+    actual = reservation(records[0][0], records[0][1], records[0][2], records[0][3], records[0][4], records[0][5])
+    resList.append(actual) 
+    return resList
 
 #Filmadatok lekérdezése
 def selectMovie(id):

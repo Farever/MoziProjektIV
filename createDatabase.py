@@ -21,6 +21,7 @@ c.execute(""" CREATE TABLE halls (
 
 c.execute(""" CREATE TABLE reservations (
     ID integer PRIMARY KEY AUTOINCREMENT,
+    orderID integer,
     last_Name text NOT NULL,
     first_Name text NOT NULL,
     hall integer,
