@@ -5,7 +5,7 @@ from PIL import ImageTk, Image
 import database
 from classes import movie
 
-root = Tk()
+root = ttk.Window(themename="darkly")
 
 hallID = 1
 movie = database.selectMovie(hallID)
