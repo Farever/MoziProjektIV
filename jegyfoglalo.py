@@ -1,6 +1,6 @@
 from tkinter import *
 import ttkbootstrap as ttk
-import math
+import math as math
 
 root = Tk()
 style = ttk.Style("darkly")
@@ -8,7 +8,7 @@ style = ttk.Style("darkly")
 chairs = []
 sor = []
 
-ferohely = 43
+ferohely = 51
 
 ujfoglalas = []
 
@@ -95,15 +95,30 @@ def nevAblak():
 def buttonStructure():
     sor = 0
     oszlop = 0
-    for i in range(1, ferohely +1):
 
-        if(i % 5 == 1 and i != 1):
+    felsoOszlop =  ferohely - (math.floor(math.sqrt(ferohely))**2)
+    
+    tobbiOszlop =ferohely - felsoOszlop
+
+    print("Urolsó oszlop ", felsoOszlop, "másik ", tobbiOszlop)
+
+    for i in range(1, ferohely +1): 
+        
+        if(i <= (felsoOszlop + math.sqrt(tobbiOszlop))):
+            sor = 0
+            print(i)
+
+        elif((i - felsoOszlop) % math.sqrt(tobbiOszlop)  == 1 and i != 1):
             sor += 1
-            oszlop = 0
+            oszlop = math.floor(felsoOszlop / 2)
+        
+        if(i == felsoOszlop + math.sqrt(tobbiOszlop) + 1):
+            sor = 1
+            oszlop = math.floor(felsoOszlop / 2)
         
         #print(chairs[i])
         if(chairs[i] == 0):    
-            btn = ttk.Button(root, text = i, bootstyle="success", command= lambda seat_number = i:foglalasLista(seat_number, btn.config("bootstyle")), state="on", width = 10)
+            btn = ttk.Button(root, text = i, bootstyle="success",command= lambda seat_number = i:foglalasLista(seat_number, btn.config("bootstyle")), state="on", width = 10)
             btn.grid(row = sor, column= oszlop,padx= 2, pady= 2)
             oszlop += 1
                 
