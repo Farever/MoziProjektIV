@@ -1,6 +1,10 @@
 from tkinter import *
 import ttkbootstrap as ttk
+import database
 import math as math
+
+from classes import reservation
+from classes import movie
 
 root = Tk()
 style = ttk.Style("darkly")
@@ -8,13 +12,13 @@ style = ttk.Style("darkly")
 chairs = []
 sor = []
 
-ferohely = 51
+ferohely = database.selectMovie(1).chairs
 
 ujfoglalas = []
 
 seats = []
-#
-foglaltak = []
+
+foglaltak = database.reservedseats(1)
 windowWidth = math.floor((ferohely / 5) * 100)
 
 root.geometry(f'{windowWidth}x500')
@@ -28,10 +32,10 @@ lbl_foglalasKiiras.grid(column= 0, row = 15, columnspan= 5)
 for i in range(ferohely + 1):
     chairs.append(0)
 
-with open("chairs.txt", encoding="utf8") as file:
-    for i in file:
-        sor = i.strip().split(";")
-        foglaltak.append(int(sor[0]))
+#with open("chairs.txt", encoding="utf8") as file:
+#   for i in file:
+#        sor = i.strip().split(";")
+#        foglaltak.append(int(sor[0]))
 
 for i in range(len(foglaltak)):
     chairs[foglaltak[i]] = 1
@@ -66,9 +70,12 @@ def foglalasLista(szekszam, button):
         button= "success"
 
 def foglalasAdatbazis():
-    print("Hmm")
+    for i in range(len(ujfoglalas)):
+        database.insert(1111, ent_Vezeteknev.get(), ent_Keresztnev.get(), 1, ujfoglalas[i])
 
 def nevAblak():
+    global ent_Keresztnev
+    global ent_Vezeteknev
     top = ttk.Toplevel()
     
     top.geometry("400x200")
