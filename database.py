@@ -5,12 +5,13 @@ from classes import movie
 
 resList = []
 moveiesList = []
+seatsList = []
 
 #Foglalás törlése
 def delete(orderID):
     conn = sqlite3.connect("moziProjekt.db")
     c = conn.cursor()
-    c.execute("DELETE FROM reservations WHERE ID= "+ str(orderID))
+    c.execute("DELETE FROM reservations WHERE orderID= "+ str(orderID))
     conn.commit()
     conn.close()
 
@@ -57,3 +58,13 @@ def count(hallId):
     c.execute("SELECT COUNT(*) FROM reservations WHERE hall =" + str(hallId))
     numberOfRows = c.fetchone()[0]
     return numberOfRows
+
+def reservedseats(hallId):
+    conn = sqlite3.connect("moziProjekt.db")
+    c = conn.cursor()   
+    c.execute("SELECT * FROM reservations WHERE hall=" + str(hallId))
+    records = c.fetchall()
+    for i in range(len(records)):
+        actual = reservation(records[i][0], records[i][1], records[i][2], records[i][3], records[i][4], records[i][5])
+        seatsList.append(actual.chair)
+    return resList
