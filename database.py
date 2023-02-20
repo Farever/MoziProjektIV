@@ -43,8 +43,11 @@ def selectReservation(orderID):
 
 #Még nincs kész
 def getMaxOrderID():
-    maxID = 0
-    return maxID
+    conn = sqlite3.connect("moziProjekt.db")
+    c = conn.cursor()   
+    c.execute("SELECT MAX(orderID) FROM reservations")
+    maxID = c.fetchone()
+    return maxID[0]
 
 #Filmadatok lekérdezése
 def selectMovie(id):
@@ -73,3 +76,5 @@ def reservedseats(hallId):
         actual = reservation(records[i][0], records[i][1], records[i][2], records[i][3], records[i][4], records[i][5])
         seatsList.append(actual.chair)
     return seatsList
+
+delete(1)

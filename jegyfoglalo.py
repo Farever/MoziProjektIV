@@ -68,15 +68,18 @@ def foglalasLista(szekszam, button):
         button= "success"
 
 def foglalasAdatbazis():
+    orderID = database.getMaxOrderID()
+    if(orderID != None):
+        orderID = int(orderID) + 1
+    else:
+        orderID = 1
     for i in range(len(ujfoglalas)):
-        database.insert(1111, ent_Vezeteknev.get(), ent_Keresztnev.get(), 1, ujfoglalas[i])
-    orderID += 1
+        database.insert(orderID, ent_Vezeteknev.get(), ent_Keresztnev.get(), 1, ujfoglalas[i])
+    print("foglalás ID:", orderID)
     ujfoglalas.clear()
     lbl_foglalasKiiras["text"] = "Foglalások: "
     top.destroy()
     buttonStructure()
-
-    
 
 def nevAblak():
     global ent_Keresztnev
