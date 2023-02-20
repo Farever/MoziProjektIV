@@ -41,6 +41,11 @@ def selectReservation(orderID):
     resList.append(actual) 
     return resList
 
+#Még nincs kész
+def getMaxOrderID():
+    maxID = 0
+    return maxID
+
 #Filmadatok lekérdezése
 def selectMovie(id):
     conn = sqlite3.connect("moziProjekt.db")
