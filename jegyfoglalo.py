@@ -9,6 +9,7 @@ from classes import movie
 root = Tk()
 style = ttk.Style("darkly")
 
+orderID = 1
 chairs = []
 sor = []
 
@@ -19,9 +20,6 @@ ujfoglalas = []
 seats = []
 
 foglaltak = database.reservedseats(1)
-windowWidth = math.floor((ferohely / 5) * 100)
-
-root.geometry(f'{windowWidth}x500')
 
 lbl_foglalasKiiras = ttk.Label(root, bootstyle="warning", text ="Foglalások: ")
 #lbl_foglalasFrame = Labelframe(root, bootstyle="success", text="Foglalások aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", height=50)
@@ -72,10 +70,18 @@ def foglalasLista(szekszam, button):
 def foglalasAdatbazis():
     for i in range(len(ujfoglalas)):
         database.insert(1111, ent_Vezeteknev.get(), ent_Keresztnev.get(), 1, ujfoglalas[i])
+    orderID += 1
+    ujfoglalas.clear()
+    lbl_foglalasKiiras["text"] = "Foglalások: "
+    top.destroy()
+    buttonStructure()
+
+    
 
 def nevAblak():
     global ent_Keresztnev
     global ent_Vezeteknev
+    global top
     top = ttk.Toplevel()
     
     top.geometry("400x200")
@@ -109,7 +115,7 @@ def buttonStructure():
 
     print("Urolsó oszlop ", felsoOszlop, "másik ", tobbiOszlop)
 
-    for i in range(1, ferohely +1): 
+    for i in range(1, ferohely +1):
         
         if(i <= (felsoOszlop + math.sqrt(tobbiOszlop))):
             sor = 0
@@ -133,14 +139,10 @@ def buttonStructure():
             btn = ttk.Button(root, text = i, bootstyle="danger",  width = 10,)
             btn.grid(row = sor, column= oszlop,  padx= 2, pady= 2)
             oszlop += 1
-    
-    btn_foglalo = ttk.Button(root, bootstyle="primary", text = "Foglalás", width = 10, command= nevAblak)
-    btn_foglalo.grid(row= sor + 1, column= oszlop + 1)
-        
-        
 
-        
-            
+        if(i == ferohely):
+            btn_foglalo = ttk.Button(root, bootstyle="primary", text = "Foglalás", width = 10, command= nevAblak)
+            btn_foglalo.grid(row= sor + 1, column= oszlop + 1)
 
 buttonStructure()
 

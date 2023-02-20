@@ -48,4 +48,5 @@ with open("movies.txt", "r",encoding = 'utf-8') as f:
 conn.commit()
 
 #5. lépés: lezárjuk a kapcsolatot
+print("Kész")
 conn.close()
