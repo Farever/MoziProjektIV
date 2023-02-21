@@ -1,25 +1,26 @@
 from tkinter import *
 import ttkbootstrap as ttk
-import database
+import database as database
 import math as math
 
 from classes import reservation
 from classes import movie
 
+teremszam = 1
+
 root = Tk()
 style = ttk.Style("darkly")
 
 orderID = 1
-chairs = []
+
 sor = []
 
-ferohely = database.selectMovie(1).chairs
+chairs = []
 
 ujfoglalas = []
 
 seats = []
 
-foglaltak = database.reservedseats(1)
 
 lbl_foglalasKiiras = ttk.Label(root, bootstyle="warning", text ="Foglalások: ")
 #lbl_foglalasFrame = Labelframe(root, bootstyle="success", text="Foglalások aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", height=50)
@@ -27,16 +28,14 @@ lbl_foglalasKiiras.grid(column= 0, row = 15, columnspan= 5)
 #lbl_foglalasFrame.grid(column= 0, row = 15, columnspan= 5)
 
 
-for i in range(ferohely + 1):
-    chairs.append(0)
+
 
 #with open("chairs.txt", encoding="utf8") as file:
 #   for i in file:
 #        sor = i.strip().split(";")
 #        foglaltak.append(int(sor[0]))
 
-for i in range(len(foglaltak)):
-    chairs[foglaltak[i]] = 1
+
 
 def foglalasLista(szekszam, button):
     
@@ -45,7 +44,7 @@ def foglalasLista(szekszam, button):
         ujfoglalas.append(szekszam)
         lbl_foglalasKiiras["text"] = lbl_foglalasKiiras["text"] + str(szekszam) + "; "
         chairs[szekszam] = 1
-        button= "warning"
+        button[szekszam-1].config(bootstyle = "warning")
     
     else:
         chairs[szekszam] = 0
@@ -65,7 +64,7 @@ def foglalasLista(szekszam, button):
         for i in ujfoglalas:
             lbl_foglalasKiiras["text"] += str(i) + "; "
                 
-        button= "success"
+        button[szekszam-1].config(bootstyle = "success")
 
 def foglalasAdatbazis():
     orderID = database.getMaxOrderID()
@@ -79,7 +78,7 @@ def foglalasAdatbazis():
     ujfoglalas.clear()
     lbl_foglalasKiiras["text"] = "Foglalások: "
     top.destroy()
-    buttonStructure()
+    buttonStructure(teremszam)
 
 def nevAblak():
     global ent_Keresztnev
@@ -108,7 +107,20 @@ def nevAblak():
 
 
 
-def buttonStructure():
+def buttonStructure(teremszam):
+
+    Buttons = []
+
+    ferohely = database.selectMovie(teremszam).chairs
+    foglaltak = database.reservedseats(teremszam)
+
+    for i in range(ferohely + 1):
+        chairs.append(0)
+    
+    for i in range(len(foglaltak)):
+        print(foglaltak[i] , "EZ EGY FOGLALAS")
+        chairs[foglaltak[i]] = 1
+    
     sor = 0
     oszlop = 0
 
@@ -134,12 +146,14 @@ def buttonStructure():
         
         #print(chairs[i])
         if(chairs[i] == 0):    
-            btn = ttk.Button(root, text = i, bootstyle="success",command= lambda seat_number = i:foglalasLista(seat_number, btn.config("bootstyle")), state="on", width = 10)
+            btn = ttk.Button(root, text = i, bootstyle="success",command= lambda seat_number = i:foglalasLista(seat_number, Buttons), state="on", width = 10)
+            Buttons.append(btn)
             btn.grid(row = sor, column= oszlop,padx= 2, pady= 2)
             oszlop += 1
                 
         else:   
             btn = ttk.Button(root, text = i, bootstyle="danger",  width = 10,)
+            Buttons.append(btn)
             btn.grid(row = sor, column= oszlop,  padx= 2, pady= 2)
             oszlop += 1
 
@@ -147,7 +161,7 @@ def buttonStructure():
             btn_foglalo = ttk.Button(root, bootstyle="primary", text = "Foglalás", width = 10, command= nevAblak)
             btn_foglalo.grid(row= sor + 1, column= oszlop + 1)
 
-buttonStructure()
+buttonStructure(teremszam)
 
 
 root.mainloop()
