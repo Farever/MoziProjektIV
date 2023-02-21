@@ -38,8 +38,9 @@ def selectReservation(orderID):
     c = conn.cursor()   
     c.execute("SELECT * FROM reservations WHERE orderID=" + str(orderID))
     records = c.fetchall()
-    actual = reservation(records[0][0], records[0][1], records[0][2], records[0][3], records[0][4], records[0][5])
-    resList.append(actual) 
+    for record in records:
+        actual = reservation(record[0], record[1], record[2], record[3], record[4], record[5])
+        resList.append(actual)
     return resList
 
 #legnagyobb orderID megkeresése
