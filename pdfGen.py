@@ -4,6 +4,13 @@ import database as db
 from classes import reservation
 from classes import movie
 
+def pdfGEN(orderID):
+    pdf = PDF()
+    pdf.set_title("MoziTown jegyfoglalás")
+    pdf.print_chapter(orderID)
+    pdf.generateCode()
+    pdf.output("res-" + str(orderID) + ".pdf")
+
 class PDF(FPDF):
     def header(self):
         # Setting font: helvetica bold 15
@@ -91,10 +98,4 @@ class PDF(FPDF):
         qr.make(fit = True) #Making the entire QR Code space utilized
         img = qr.make_image() #Generating the QR Code
         img.save('qr.png') #Saving the QR Code
-        self.image("qr.png")
-
-pdf = PDF()
-pdf.set_title("MoziTown jegyfoglalás")
-pdf.print_chapter(1)
-pdf.generateCode()
-pdf.output("tuto3.pdf")
+        self.image('qr.png')

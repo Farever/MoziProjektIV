@@ -1,6 +1,7 @@
 from tkinter import *
 import ttkbootstrap as ttk
 import database
+import pdfGen as pdf
 import math as math
 
 from classes import reservation
@@ -79,6 +80,7 @@ def foglalasAdatbazis():
     ujfoglalas.clear()
     lbl_foglalasKiiras["text"] = "Foglalások: "
     top.destroy()
+    pdf.pdfGEN(orderID)
     buttonStructure()
 
 def nevAblak():
