@@ -81,7 +81,7 @@ class PDF(FPDF):
         self.ln()
         self.cell(0,5, "Terem: " + str(Reservations[0].hall))
         self.ln()
-        self.cell(0,5, "Székek: " + ' '.join(map(str, chairlist)))
+        self.cell(0,5, "Székek: " + ', '.join(map(str, chairlist)))
         self.ln()
         # Final mention in italics:
         self.set_font(style="I")
