@@ -20,7 +20,7 @@ def delete(orderID):
 def insert(order_ID, lastName, firstName, hall, chair):
     conn = sqlite3.connect("moziProjekt.db")
     c = conn.cursor()
-    c.execute("INSERT or REPLACE INTO reservations VALUES (NULL,:orderID, :last_Name, :first_Name, :hall, :chair)",
+    c.execute("INSERT INTO reservations VALUES (NULL,:orderID, :last_Name, :first_Name, :hall, :chair)",
         {
             'orderID': int(order_ID),
             'last_Name':str(lastName),
