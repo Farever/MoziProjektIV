@@ -77,6 +77,8 @@ class PDF(FPDF):
         # Printing justified text:
         self.cell(0,5, "Név: " + name)
         self.ln()
+        self.cell(0,5, "Film: " + db.selectMovie(Reservations[0].hall).title)
+        self.ln()
         self.cell(0,5, "Terem: " + str(Reservations[0].hall))
         self.ln()
         self.cell(0,5, "Székek: " + ' '.join(map(str, chairlist)))
