@@ -20,16 +20,21 @@ def delete(orderID):
 def insert(order_ID, lastName, firstName, hall, chair):
     conn = sqlite3.connect("moziProjekt.db")
     c = conn.cursor()
-    c.execute("INSERT INTO reservations VALUES (NULL,:orderID, :last_Name, :first_Name, :hall, :chair)",
-        {
-            'orderID': int(order_ID),
-            'last_Name':str(lastName),
-            'first_Name': str(firstName),
-            'hall': int(hall),
-            'chair': int(chair),
-        }
-    )
-    conn.commit()
+    c.execute("begin")
+    try:
+        c.execute("INSERT INTO reservations VALUES (NULL,:orderID, :last_Name, :first_Name, :hall, :chair)",
+            {
+                'orderID': int(order_ID),
+                'last_Name':str(lastName),
+                'first_Name': str(firstName),
+                'hall': int(hall),
+                'chair': int(chair),
+            }
+        )
+        conn.commit()
+    except sqlite3.Error:
+        print("failed!")
+        c.execute("rollback")
     conn.close()
 
 #Foglalás lekérdezés
