@@ -1,5 +1,6 @@
 from tkinter import *
 import sqlite3
+
 from classes import reservation
 from classes import movie
 
@@ -41,7 +42,7 @@ def selectReservation(orderID):
     resList.append(actual) 
     return resList
 
-#Még nincs kész
+#legnagyobb orderID megkeresése
 def getMaxOrderID():
     conn = sqlite3.connect("moziProjekt.db")
     c = conn.cursor()   
@@ -67,6 +68,7 @@ def count(hallId):
     numberOfRows = c.fetchone()[0]
     return numberOfRows
 
+#Foglalt székek listája
 def reservedseats(hallId):
     conn = sqlite3.connect("moziProjekt.db")
     c = conn.cursor()   
@@ -76,5 +78,3 @@ def reservedseats(hallId):
         actual = reservation(records[i][0], records[i][1], records[i][2], records[i][3], records[i][4], records[i][5])
         seatsList.append(actual.chair)
     return seatsList
-
-delete(1)
