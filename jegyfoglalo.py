@@ -8,9 +8,6 @@ from classes import movie
 
 teremszam = 1
 
-root = Tk()
-style = ttk.Style("darkly")
-
 orderID = 1
 
 sor = []
@@ -22,8 +19,8 @@ ujfoglalas = []
 seats = []
 
 
-lbl_foglalasKiiras = ttk.Label(root, bootstyle="warning", text ="Foglalások: ")
-#lbl_foglalasFrame = Labelframe(root, bootstyle="success", text="Foglalások aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", height=50)
+lbl_foglalasKiiras = ttk.Label(top, bootstyle="warning", text ="Foglalások: ")
+#lbl_foglalasFrame = Labelframe(top, bootstyle="success", text="Foglalások aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", height=50)
 lbl_foglalasKiiras.grid(column= 0, row = 15, columnspan= 5)
 #lbl_foglalasFrame.grid(column= 0, row = 15, columnspan= 5)
 
@@ -108,7 +105,10 @@ def nevAblak():
 
 
 def buttonStructure(teremszam):
+    top = Toplevel()
 
+    lbl_foglalasKiiras = ttk.Label(top, bootstyle="warning", text ="Foglalások: ")
+    lbl_foglalasKiiras.grid(column= 0, row = 15, columnspan= 5)
     Buttons = []
 
     ferohely = database.selectMovie(teremszam).chairs
@@ -146,22 +146,22 @@ def buttonStructure(teremszam):
         
         #print(chairs[i])
         if(chairs[i] == 0):    
-            btn = ttk.Button(root, text = i, bootstyle="success",command= lambda seat_number = i:foglalasLista(seat_number, Buttons), state="on", width = 10)
+            btn = ttk.Button(top, text = i, bootstyle="success",command= lambda seat_number = i:foglalasLista(seat_number, Buttons), state="on", width = 10)
             Buttons.append(btn)
             btn.grid(row = sor, column= oszlop,padx= 2, pady= 2)
             oszlop += 1
                 
         else:   
-            btn = ttk.Button(root, text = i, bootstyle="danger",  width = 10,)
+            btn = ttk.Button(top, text = i, bootstyle="danger",  width = 10,)
             Buttons.append(btn)
             btn.grid(row = sor, column= oszlop,  padx= 2, pady= 2)
             oszlop += 1
 
         if(i == ferohely):
-            btn_foglalo = ttk.Button(root, bootstyle="primary", text = "Foglalás", width = 10, command= nevAblak)
+            btn_foglalo = ttk.Button(top, bootstyle="primary", text = "Foglalás", width = 10, command= nevAblak)
             btn_foglalo.grid(row= sor + 1, column= oszlop + 1)
 
 buttonStructure(teremszam)
 
 
-root.mainloop()
+top.mainloop()
