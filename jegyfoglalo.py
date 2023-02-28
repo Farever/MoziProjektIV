@@ -1,6 +1,7 @@
 from tkinter import *
 import ttkbootstrap as ttk
-import database as database
+import database
+import pdfGen as pdf
 import math as math
 
 from classes import reservation
@@ -69,14 +70,17 @@ def foglalasAdatbazis():
         orderID = int(orderID) + 1
     else:
         orderID = 1
-    for i in range(len(ujfoglalas)):
-        database.insert(orderID, ent_Vezeteknev.get(), ent_Keresztnev.get(), 1, ujfoglalas[i])
-    print("foglalás ID:", orderID)
-    ujfoglalas.clear()
+    vezeteknev = ent_Vezeteknev.get()
+    keresztnev = ent_Keresztnev.get()
     lbl_foglalasKiiras["text"] = "Foglalások: "
     top.destroy()
-    buttonStructure(teremszam)
-
+    for i in range(len(ujfoglalas)):
+        foglaltak.append(ujfoglalas[i])
+        database.insert(orderID, vezeteknev, keresztnev, 1, ujfoglalas[i])
+    buttonStructure()
+    ujfoglalas.clear()
+    pdf.pdfGEN(orderID)
+    
 def nevAblak():
     global ent_Keresztnev
     global ent_Vezeteknev
