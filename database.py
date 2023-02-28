@@ -76,5 +76,3 @@ def reservedseats(hallId):
         actual = reservation(records[i][0], records[i][1], records[i][2], records[i][3], records[i][4], records[i][5])
         seatsList.append(actual.chair)
     return seatsList
-
-delete(1)
