@@ -7,36 +7,15 @@ import math as math
 from classes import reservation
 from classes import movie
 
-teremszam = 1
-
 orderID = 1
 
 sor = []
 
 chairs = []
 
-foglaltak = []
-
 ujfoglalas = []
 
 seats = []
-
-
-lbl_foglalasKiiras = ttk.Label(top, bootstyle="warning", text ="Foglalások: ")
-#lbl_foglalasFrame = Labelframe(top, bootstyle="success", text="Foglalások aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", height=50)
-lbl_foglalasKiiras.grid(column= 0, row = 15, columnspan= 5)
-#lbl_foglalasFrame.grid(column= 0, row = 15, columnspan= 5)
-
-
-
-
-#with open("chairs.txt", encoding="utf8") as file:
-#   for i in file:
-#        sor = i.strip().split(";")
-#        foglaltak.append(int(sor[0]))
-#yeaaaah
-
-
 
 def foglalasLista(szekszam, button):
     
@@ -112,7 +91,10 @@ def nevAblak():
 
 
 def buttonStructure(teremszam):
-    top = Toplevel()
+    top = ttk.Toplevel()
+
+    global foglaltak
+    global lbl_foglalasKiiras
 
     lbl_foglalasKiiras = ttk.Label(top, bootstyle="warning", text ="Foglalások: ")
     lbl_foglalasKiiras.grid(column= 0, row = 15, columnspan= 5)
@@ -167,8 +149,3 @@ def buttonStructure(teremszam):
         if(i == ferohely):
             btn_foglalo = ttk.Button(top, bootstyle="primary", text = "Foglalás", width = 10, command= nevAblak)
             btn_foglalo.grid(row= sor + 1, column= oszlop + 1)
-
-buttonStructure(teremszam)
-
-
-top.mainloop()
