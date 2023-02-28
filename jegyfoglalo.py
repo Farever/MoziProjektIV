@@ -15,6 +15,8 @@ sor = []
 
 chairs = []
 
+foglaltak = []
+
 ujfoglalas = []
 
 seats = []
@@ -32,6 +34,7 @@ lbl_foglalasKiiras.grid(column= 0, row = 15, columnspan= 5)
 #   for i in file:
 #        sor = i.strip().split(";")
 #        foglaltak.append(int(sor[0]))
+#yeaaaah
 
 
 
