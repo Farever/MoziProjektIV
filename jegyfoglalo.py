@@ -46,7 +46,7 @@ def foglalasLista(szekszam, button):
                 
         button[szekszam-1].config(bootstyle = "success")
 
-def foglalasAdatbazis():
+def foglalasAdatbazis(teremszam):
     orderID = database.getMaxOrderID()
     if(orderID != None):
         orderID = int(orderID) + 1
@@ -58,12 +58,12 @@ def foglalasAdatbazis():
     top.destroy()
     for i in range(len(ujfoglalas)):
         foglaltak.append(ujfoglalas[i])
-        database.insert(orderID, vezeteknev, keresztnev, 1, ujfoglalas[i])
-    buttonStructure()
+        database.insert(orderID, vezeteknev, keresztnev, teremszam, ujfoglalas[i])
+    buttonStructure(teremszam)
     ujfoglalas.clear()
     pdf.pdfGEN(orderID)
     
-def nevAblak():
+def nevAblak(teremszam):
     global ent_Keresztnev
     global ent_Vezeteknev
     global top
@@ -76,7 +76,7 @@ def nevAblak():
     lbl_Keresztnev = ttk.Label(top, text ="Kérem írja be a Kereszt nevét! ", font=("Arial", 10), bootstyle ="info")
     ent_Vezeteknev = ttk.Entry(top, bootstyle="primary", width= 50)
     ent_Keresztnev = ttk.Entry(top, bootstyle="primary", width= 50)
-    btn_foglalas = ttk.Button(top, bootstyle = "info", text=" Foglalás", command=foglalasAdatbazis)
+    btn_foglalas = ttk.Button(top, bootstyle = "info", text=" Foglalás", command=lambda: foglalasAdatbazis(teremszam))
 
 
     lbl_visszaigazolas.grid(row= 1, column= 1, columnspan= 4,pady= 2)
@@ -147,5 +147,5 @@ def buttonStructure(teremszam):
             oszlop += 1
 
         if(i == ferohely):
-            btn_foglalo = ttk.Button(top, bootstyle="primary", text = "Foglalás", width = 10, command= nevAblak)
+            btn_foglalo = ttk.Button(top, bootstyle="primary", text = "Foglalás", width = 10, command= lambda:nevAblak(teremszam))
             btn_foglalo.grid(row= sor + 1, column= oszlop + 1)
