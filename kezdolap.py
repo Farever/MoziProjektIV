@@ -4,6 +4,7 @@ from PIL import ImageTk, Image
 from ttkbootstrap.constants import *
 import database
 import jegyfoglalo
+import foglalastorles
 from classes import movie
 
 root = Tk()
@@ -30,7 +31,7 @@ for i in range(4):
 
 
 #main
-lbl_mozinev = ttk.Label(root, text="Mozi",font=('Times 40'))
+lbl_mozinev = ttk.Label(root, text="MoziTown",font=('Times 40'))
 lbl_mozinev.grid(row=1,column=1,columnspan=4)
 
 
@@ -42,7 +43,7 @@ def on_click(event=None):
     print("image clicked")
 button_img1 = Button(root, image= img1, command=lambda:jegyfoglalo.buttonStructure(1))
 button_img1.grid(row=2, column=1, rowspan=3)
-label_leiras1 = Label(root,justify= "left", text="Cím: " + movies[0].title +"\n Játékidő: " + movies[0].playtime +"\n Műfaj: " + movies[0].genre, font=('Times 18'))
+label_leiras1 = Label(root,justify= "left", text="Cím: " + movies[0].title +"\n Játékidő: " + movies[0].playtime + " perc" +"\n Műfaj: " + movies[0].genre, font=('Times 18'))
 label_leiras1.grid(row=2, column=2)
 button_f1 = ttk.Button(bootstyle="success-outline", text="Foglalás", command=lambda:jegyfoglalo.buttonStructure(1))
 button_f1.grid(row=3,column=2)
@@ -69,14 +70,14 @@ else:
     Meter1.configure(bootstyle="primary")
 
 #harmadik negyed
-img3 = ImageTk.PhotoImage(Image.open("images/2.jpg").resize((200,300)))
+img3 = ImageTk.PhotoImage(Image.open("images/3.jpg").resize((200,300)))
 label_img3 = Label(root, image = img3,width=200,borderwidth=4, relief="solid")
 label_img3.grid(row=5, column=1,rowspan=3)
 def on_click3(event=None):
     print("image3 clicked")
 button_img3 = Button(root, image= img3, command=lambda:jegyfoglalo.buttonStructure(3))
 button_img3.grid(row=5, column=1,rowspan=3)
-label_leiras3 = Label(root,justify= "left", text="Cím: " + movies[2].title +"\n Játékidő: " + movies[2].playtime +"\n Műfaj: " + movies[2].genre, font=('Times 18'))
+label_leiras3 = Label(root,justify= "left", text="Cím: " + movies[2].title +"\n Játékidő: " + movies[2].playtime + " perc" +"\n Műfaj: " + movies[2].genre, font=('Times 18'))
 label_leiras3.grid(row=5, column=2)
 button_f3 = ttk.Button(bootstyle="success-outline", text="Foglalás", command=lambda:jegyfoglalo.buttonStructure(3))
 button_f3.grid(row=6,column=2)
@@ -104,14 +105,14 @@ else:
 
 
 #második negyed
-img2 = ImageTk.PhotoImage(Image.open("images/3.jpg").resize((200,300)))
+img2 = ImageTk.PhotoImage(Image.open("images/2.jpg").resize((200,300)))
 label_img2 = Label(root, image = img2,width=200,borderwidth=4, relief="solid")
 label_img2.grid(row=2, column=3, rowspan=3)
 def on_click2(event=None):
     print("image2 clicked")
 button_img2 = Button(root, image= img2, command=lambda:jegyfoglalo.buttonStructure(2))
 button_img2.grid(row=2, column=3,rowspan=3)
-label_leiras2 = Label(root,justify= "left", text="Cím: " + movies[1].title +"\n Játékidő: " + movies[1].playtime +"\n Műfaj: " + movies[1].genre, font=('Times 18'))
+label_leiras2 = Label(root,justify= "left", text="Cím: " + movies[1].title +"\n Játékidő: " + movies[1].playtime + " perc" +"\n Műfaj: " + movies[1].genre, font=('Times 18'))
 label_leiras2.grid(row=2, column=4)
 button_f2 = ttk.Button(bootstyle="success-outline", text="Foglalás", command=lambda:jegyfoglalo.buttonStructure(2))
 button_f2.grid(row=3,column=4)
@@ -147,10 +148,10 @@ def on_click4(event=None):
     print("image4 clicked")
 button_img4 = Button(root, image= img4, command=lambda:jegyfoglalo.buttonStructure(4))
 button_img4.grid(row=5, column=3,rowspan=3)
-label_leiras4 = Label(root,justify= "left", text="Cím: " + movies[3].title +"\n Játékidő: " + movies[3].playtime +"\n Műfaj: " + movies[3].genre, font=('Times 18'))
+label_leiras4 = Label(root,justify= "left", text="Cím: " + movies[3].title +"\n Játékidő: " + movies[3].playtime + " perc" +"\n Műfaj: " + movies[3].genre, font=('Times 18'))
 label_leiras4.grid(row=5, column=4)
-button_f3 = ttk.Button(bootstyle="success-outline", text="Foglalás", command=lambda:jegyfoglalo.buttonStructure(4))
-button_f3.grid(row=6,column=4)
+button_f4 = ttk.Button(bootstyle="success-outline", text="Foglalás", command=lambda:jegyfoglalo.buttonStructure(4))
+button_f4.grid(row=6,column=4)
 movies = []
 for i in range(4):
     movie = database.selectMovie(i+1)
@@ -172,8 +173,8 @@ elif Meter4.amountusedvar.get() >= movies[3].chairs*0.5:
     Meter4.configure(bootstyle="warning")
 else:
     Meter4.configure(bootstyle="primary")
-
-
+button_delete = ttk.Button(bootstyle = "danger-outline", text="Foglalás törlése", command=lambda:foglalastorles.rDeleteWindow())
+button_delete.grid(column=5, row= 7)
 
 
 root.mainloop()
