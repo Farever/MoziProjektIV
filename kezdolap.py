@@ -21,7 +21,7 @@ def toggle():
 
 
 var1 = IntVar()
-t1 = ttk.Checkbutton(root, variable=var1, onvalue=1, offvalue=0, command=toggle,bootstyle="light-square-toggle", text = "Éjszakai mód")
+t1 = ttk.Checkbutton(root, variable=var1, onvalue=1, offvalue=0, command=toggle,bootstyle="Info.Roundtoggle.Toolbutton", text = "Éjszakai mód")
 t1.grid(row=0, column=5)
 
 movies = []
