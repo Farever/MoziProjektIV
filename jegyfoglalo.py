@@ -4,6 +4,7 @@ import database
 import pdfGen as pdf
 import math as math
 
+from multiprocessing import Process, Queue
 from classes import reservation
 from classes import movie
 
@@ -55,28 +56,35 @@ def foglalasAdatbazis(teremszam):
     vezeteknev = ent_Vezeteknev.get()
     keresztnev = ent_Keresztnev.get()
     lbl_foglalasKiiras["text"] = "Foglalások: "
+    topNev.destroy()
     top.destroy()
     for i in range(len(ujfoglalas)):
         foglaltak.append(ujfoglalas[i])
         database.insert(orderID, vezeteknev, keresztnev, teremszam, ujfoglalas[i])
-    buttonStructure(teremszam)
+
+    queue = Queue()
+    p = Process(target=pdf.pdfGEN, args=(queue, orderID))
+    p.start()
+
     ujfoglalas.clear()
-    pdf.pdfGEN(orderID)
+    buttonStructure(teremszam)
+    
     
 def nevAblak(teremszam):
     global ent_Keresztnev
     global ent_Vezeteknev
-    global top
-    top = ttk.Toplevel()
-    
-    top.geometry("400x200")
+    global topNev
 
-    lbl_visszaigazolas = ttk.Label(top, text= "Foglalás", font=("Arial", 25))
-    lbl_Vezeteknev = ttk.Label(top, text ="Kérem írja be a Vezeték nevét! ", font=("Arial", 10), bootstyle ="info")
-    lbl_Keresztnev = ttk.Label(top, text ="Kérem írja be a Kereszt nevét! ", font=("Arial", 10), bootstyle ="info")
-    ent_Vezeteknev = ttk.Entry(top, bootstyle="primary", width= 50)
-    ent_Keresztnev = ttk.Entry(top, bootstyle="primary", width= 50)
-    btn_foglalas = ttk.Button(top, bootstyle = "info", text=" Foglalás", command=lambda: foglalasAdatbazis(teremszam))
+    topNev = ttk.Toplevel()
+    
+    topNev.geometry("400x200")
+
+    lbl_visszaigazolas = ttk.Label(topNev, text= "Foglalás", font=("Arial", 25))
+    lbl_Vezeteknev = ttk.Label(topNev, text ="Kérem írja be a Vezeték nevét! ", font=("Arial", 10), bootstyle ="info")
+    lbl_Keresztnev = ttk.Label(topNev, text ="Kérem írja be a Kereszt nevét! ", font=("Arial", 10), bootstyle ="info")
+    ent_Vezeteknev = ttk.Entry(topNev, bootstyle="primary", width= 50)
+    ent_Keresztnev = ttk.Entry(topNev, bootstyle="primary", width= 50)
+    btn_foglalas = ttk.Button(topNev, bootstyle = "info", text=" Foglalás", command=lambda: foglalasAdatbazis(teremszam))
 
 
     lbl_visszaigazolas.grid(row= 1, column= 1, columnspan= 4,pady= 2)
@@ -91,6 +99,7 @@ def nevAblak(teremszam):
 
 
 def buttonStructure(teremszam):
+    global top
     top = ttk.Toplevel()
 
     global foglaltak
