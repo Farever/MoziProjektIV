@@ -3,7 +3,7 @@ import ttkbootstrap as ttk
 import database
 import pdfGen as pdf
 import math as math
-
+from PIL import ImageTk, Image
 from multiprocessing import Process, Queue
 from classes import reservation
 from classes import movie
@@ -76,8 +76,15 @@ def nevAblak(teremszam):
     global topNev
 
     topNev = ttk.Toplevel()
-    
     topNev.geometry("400x200")
+    topNev.resizable(False, False)
+    topNev.title("MoziTown jegyfogglalás")
+
+    ico = Image.open('logo-color.png')
+    photo = ImageTk.PhotoImage(ico)
+    topNev.wm_iconphoto(False, photo)
+    
+    
 
     lbl_visszaigazolas = ttk.Label(topNev, text= "Foglalás", font=("Arial", 25))
     lbl_Vezeteknev = ttk.Label(topNev, text ="Kérem írja be a Vezeték nevét! ", font=("Arial", 10), bootstyle ="info")
@@ -101,6 +108,13 @@ def nevAblak(teremszam):
 def buttonStructure(teremszam):
     global top
     top = ttk.Toplevel()
+
+    top.resizable(False, False)
+    top.title(database.selectMovie(teremszam).title + " jegyfoglalás")
+
+    ico = Image.open('logo-color.png')
+    photo = ImageTk.PhotoImage(ico)
+    top.wm_iconphoto(False, photo)
 
     global foglaltak
     global lbl_foglalasKiiras
