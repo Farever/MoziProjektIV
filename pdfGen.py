@@ -46,7 +46,8 @@ class PDF(FPDF):
 
     def chapter_title(self, num):
         # Setting font: helvetica 12
-        self.set_font("helvetica", "", 12)
+        self.add_font("Montserrat", "", "Montserrat.ttf", uni=True)
+        self.set_font("Montserrat", "", 12)
         # Setting background color
         self.set_fill_color(200, 220, 255)
         # Printing chapter name:
@@ -73,7 +74,8 @@ class PDF(FPDF):
             chairlist.append(Reservation.chair)
         
         # Setting font: Times 12
-        self.set_font("Times", size=12)
+        self.add_font("Montserrat", "", "Montserrat.ttf", uni=True)
+        self.set_font("Montserrat", "", size=12, )
         # Printing justified text:
         self.cell(0,5, "Név: " + name)
         self.ln()
@@ -84,7 +86,6 @@ class PDF(FPDF):
         self.cell(0,5, "Székek: " + ', '.join(map(str, chairlist)))
         self.ln()
         # Final mention in italics:
-        self.set_font(style="I")
 
     def print_chapter(self, orderID):
         self.add_page()
