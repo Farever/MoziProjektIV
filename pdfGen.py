@@ -4,7 +4,7 @@ import database as db
 from classes import reservation
 from classes import movie
 
-def pdfGEN(q, orderID):
+def pdfGEN(orderID):
     pdf = PDF()
     pdf.set_title("MoziTown jegyfoglalás")
     pdf.print_chapter(orderID)

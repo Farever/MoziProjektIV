@@ -4,7 +4,6 @@ import database
 import pdfGen as pdf
 import math as math
 from PIL import ImageTk, Image
-from multiprocessing import Process, Queue
 from classes import reservation
 from classes import movie
 
@@ -43,7 +42,7 @@ def foglalasLista(szekszam, button):
                 
         
         lbl_foglalasKiiras["text"] = "Foglalások: "
-#
+
         for i in ujfoglalas:
             lbl_foglalasKiiras["text"] += str(i) + "; "
                 
@@ -57,15 +56,13 @@ def foglalasAdatbazis(teremszam, fogloldal, nevoldal):
         orderID = 1
     vezeteknev = ent_Vezeteknev.get()
     keresztnev = ent_Keresztnev.get()
+    
     lbl_foglalasKiiras["text"] = "Foglalások: "
     for i in range(len(ujfoglalas)):
         foglaltak.append(ujfoglalas[i])
         database.insert(orderID, vezeteknev, keresztnev, teremszam, ujfoglalas[i])
 
-    #queue = Queue()
-    #p = Process(target=pdf.pdfGEN, args=(queue, orderID))
-    #p.start()
-    pdf.pdfGEN("",orderID)
+    pdf.pdfGEN(orderID)
 
     ujfoglalas.clear()
     nevoldal.destroy()
