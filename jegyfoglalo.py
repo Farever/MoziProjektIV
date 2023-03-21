@@ -3,7 +3,8 @@ import ttkbootstrap as ttk
 import database
 import pdfGen as pdf
 import math as math
-
+from PIL import ImageTk, Image
+from multiprocessing import Process, Queue
 from classes import reservation
 from classes import movie
 
@@ -48,7 +49,7 @@ def foglalasLista(szekszam, button):
                 
         button[szekszam-1].config(bootstyle = "success")
 
-def foglalasAdatbazis(teremszam, fogloldal):
+def foglalasAdatbazis(teremszam, fogloldal, nevoldal):
     orderID = database.getMaxOrderID()
     if(orderID != None):
         orderID = int(orderID) + 1
@@ -61,26 +62,37 @@ def foglalasAdatbazis(teremszam, fogloldal):
         foglaltak.append(ujfoglalas[i])
         database.insert(orderID, vezeteknev, keresztnev, teremszam, ujfoglalas[i])
 
-    fogloldal.destroy()
-    top.destroy()
-    buttonStructure(teremszam)
+    #queue = Queue()
+    #p = Process(target=pdf.pdfGEN, args=(queue, orderID))
+    #p.start()
+    pdf.pdfGEN("",orderID)
+
     ujfoglalas.clear()
-    pdf.pdfGEN(orderID)
+    nevoldal.destroy()
+    fogloldal.destroy()
+    buttonStructure(teremszam)
+    
     
 def nevAblak(teremszam, fogloldal):
     global ent_Keresztnev
     global ent_Vezeteknev
-    global top
     top = ttk.Toplevel()
-    
     top.geometry("400x200")
+    top.resizable(False, False)
+    top.title("MoziTown jegyfogglalás")
+
+    ico = Image.open('logo-color.png')
+    photo = ImageTk.PhotoImage(ico)
+    top.wm_iconphoto(False, photo)
+    
+    
 
     lbl_visszaigazolas = ttk.Label(top, text= "Foglalás", font=("Arial", 25))
     lbl_Vezeteknev = ttk.Label(top, text ="Kérem írja be a Vezeték nevét! ", font=("Arial", 10), bootstyle ="info")
     lbl_Keresztnev = ttk.Label(top, text ="Kérem írja be a Kereszt nevét! ", font=("Arial", 10), bootstyle ="info")
     ent_Vezeteknev = ttk.Entry(top, bootstyle="primary", width= 50)
     ent_Keresztnev = ttk.Entry(top, bootstyle="primary", width= 50)
-    btn_foglalas = ttk.Button(top, bootstyle = "info", text=" Foglalás", command=lambda: foglalasAdatbazis(teremszam, fogloldal))
+    btn_foglalas = ttk.Button(top, bootstyle = "info", text=" Foglalás", command=lambda: foglalasAdatbazis(teremszam, fogloldal, top))
 
 
     lbl_visszaigazolas.grid(row= 1, column= 1, columnspan= 4,pady= 2)
@@ -96,6 +108,13 @@ def nevAblak(teremszam, fogloldal):
 
 def buttonStructure(teremszam):
     top = ttk.Toplevel()
+
+    top.resizable(False, False)
+    top.title(database.selectMovie(teremszam).title + " jegyfoglalás")
+
+    ico = Image.open('logo-color.png')
+    photo = ImageTk.PhotoImage(ico)
+    top.wm_iconphoto(False, photo)
 
     global foglaltak
     global lbl_foglalasKiiras

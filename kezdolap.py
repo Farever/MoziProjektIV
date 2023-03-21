@@ -7,9 +7,15 @@ import jegyfoglalo
 import foglalastorles
 from classes import movie
 
-root = Tk()
+root = ttk.Window()
 root.geometry("1100x700")
+root.resizable(False, False)
+root.title("MoziTown")
 style = ttk.Style("cosmo")
+
+ico = Image.open('logo-color.png')
+photo = ImageTk.PhotoImage(ico)
+root.wm_iconphoto(False, photo)
 
 def toggle():
 
