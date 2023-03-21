@@ -77,7 +77,7 @@ def count(hallId):
 def reservedseats(hallId):
     conn = sqlite3.connect("moziProjekt.db")
     c = conn.cursor()   
-    c.execute("SELECT * FROM reservations WHERE hall=" + str(hallId))
+    c.execute("SELECT * FROM reservations WHERE reservations.hall =" + str(hallId))
     records = c.fetchall()
     for i in range(len(records)):
         actual = reservation(records[i][0], records[i][1], records[i][2], records[i][3], records[i][4], records[i][5])

@@ -17,6 +17,8 @@ ujfoglalas = []
 
 seats = []
 
+foglaltak = []
+
 def foglalasLista(szekszam, button):
     
     if(chairs[szekszam] == 0):
@@ -46,7 +48,7 @@ def foglalasLista(szekszam, button):
                 
         button[szekszam-1].config(bootstyle = "success")
 
-def foglalasAdatbazis(teremszam):
+def foglalasAdatbazis(teremszam, fogloldal):
     orderID = database.getMaxOrderID()
     if(orderID != None):
         orderID = int(orderID) + 1
@@ -55,15 +57,17 @@ def foglalasAdatbazis(teremszam):
     vezeteknev = ent_Vezeteknev.get()
     keresztnev = ent_Keresztnev.get()
     lbl_foglalasKiiras["text"] = "Foglalások: "
-    top.destroy()
     for i in range(len(ujfoglalas)):
         foglaltak.append(ujfoglalas[i])
         database.insert(orderID, vezeteknev, keresztnev, teremszam, ujfoglalas[i])
+
+    fogloldal.destroy()
+    top.destroy()
     buttonStructure(teremszam)
     ujfoglalas.clear()
     pdf.pdfGEN(orderID)
     
-def nevAblak(teremszam):
+def nevAblak(teremszam, fogloldal):
     global ent_Keresztnev
     global ent_Vezeteknev
     global top
@@ -76,7 +80,7 @@ def nevAblak(teremszam):
     lbl_Keresztnev = ttk.Label(top, text ="Kérem írja be a Kereszt nevét! ", font=("Arial", 10), bootstyle ="info")
     ent_Vezeteknev = ttk.Entry(top, bootstyle="primary", width= 50)
     ent_Keresztnev = ttk.Entry(top, bootstyle="primary", width= 50)
-    btn_foglalas = ttk.Button(top, bootstyle = "info", text=" Foglalás", command=lambda: foglalasAdatbazis(teremszam))
+    btn_foglalas = ttk.Button(top, bootstyle = "info", text=" Foglalás", command=lambda: foglalasAdatbazis(teremszam, fogloldal))
 
 
     lbl_visszaigazolas.grid(row= 1, column= 1, columnspan= 4,pady= 2)
@@ -100,8 +104,14 @@ def buttonStructure(teremszam):
     lbl_foglalasKiiras.grid(column= 0, row = 15, columnspan= 5)
     Buttons = []
 
+
+    foglaltak.clear()
+    chairs.clear()
+
+
     ferohely = database.selectMovie(teremszam).chairs
     foglaltak = database.reservedseats(teremszam)
+
 
     for i in range(ferohely + 1):
         chairs.append(0)
@@ -147,5 +157,5 @@ def buttonStructure(teremszam):
             oszlop += 1
 
         if(i == ferohely):
-            btn_foglalo = ttk.Button(top, bootstyle="primary", text = "Foglalás", width = 10, command= lambda:nevAblak(teremszam))
+            btn_foglalo = ttk.Button(top, bootstyle="primary", text = "Foglalás", width = 10, command= lambda:nevAblak(teremszam, top))
             btn_foglalo.grid(row= sor + 1, column= oszlop + 1)
